@@ -8,7 +8,6 @@ namespace GeniusAndSpotify
 {
     public class Result
     {
-        public string song_art_image_url { get; set;}
         public string url { get; set; }
     }
 

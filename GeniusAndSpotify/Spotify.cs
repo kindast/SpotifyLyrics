@@ -11,23 +11,6 @@ namespace GeniusAndSpotify
 {
     public class Lyrics
     {
-
-        private static string GetErrorHtml(string ErrorText)
-        {
-            return $@"<!doctype html>
-                     <html lang = {"ru"}>
-                     <head>
-                       <meta charset = {"utf-8"}/>
-                       <title></title>
-                       <link rel = {"stylesheet"} href = {"style.css"}/>
-                     </head>
-                     <body>
-                       <div class = {"lyrics"}>
-                         <p>{ErrorText}</p>
-                       </div>
-                     </body>
-                     </html>";
-        }
         public static string CurrentlyPlaying()
         {
             string full_song = "";
@@ -59,7 +42,8 @@ namespace GeniusAndSpotify
 
             if (song == "")
             {
-                song = "Temperance - Alive Again";
+                Exception e = new Exception("Restart the song");
+                WriteLog(e);
             }
 
             return song;
@@ -80,7 +64,7 @@ namespace GeniusAndSpotify
                 return songURL;
             }
         }
-        public static string GetLyrics(SongInfo SongInfo)
+        public static void DownloadLyrics(SongInfo SongInfo)
         {
             string Url = SongInfo.response.hits[0].result.url;
             using (var request = new HttpRequest())
@@ -90,48 +74,33 @@ namespace GeniusAndSpotify
                     string html = request.Get(Url).ToString();
                     File.WriteAllText($"{Path.GetTempPath()}/temp.html", html);
                 }
-                catch (xNet.HttpException Exception)
+                catch (xNet.HttpException e)
                 {
-                    File.WriteAllText($"{Path.GetTempPath()}/temp.html", GetErrorHtml(Exception.Message));
-
+                    WriteLog(e);
                 }
             }
+        }
+
+        public static string GetLyrics(SongInfo SongInfo)
+        {
+            DownloadLyrics(SongInfo);
             CQ cq = CQ.CreateFromFile($"{Path.GetTempPath()}temp.html");
             var lyrics = cq.Find("div.lyrics p").Text();
-            if (lyrics == null)
-                return "lyrics = null";
-            if (cq.Find("div.lyrics p").Text() == "")
+            if (lyrics == "")
             {
-                string text = cq.Find("div.Lyrics__Container-sc-1ynbvzw-2.jgQsqn").Text();
-                string result = "";
-                for (int i = 0; i < text.Length; i++)
+                while (lyrics == "")
                 {
-                    if (Char.IsUpper(text, i))
-                        result += "\n" + text[i];
-                    else
-                        result += text[i];
+                    DownloadLyrics(SongInfo);
+                    cq = CQ.CreateFromFile($"{Path.GetTempPath()}temp.html");
+                    lyrics = cq.Find("div.lyrics p").Text();
                 }
-                lyrics = result;
             }
             return lyrics;
         }
 
-        public static void DownloadSongAvatar(SongInfo songInfo)
+        private static void WriteLog(Exception e)
         {
-            string Url = songInfo.response.hits[0].result.song_art_image_url;
-
-            try
-            {
-                using (WebClient web = new WebClient())
-                {
-                    web.DownloadFile(Url, "SongAvatar.png");
-                }
-            }
-            catch (Exception e)
-            {
-                //Random rd = new Random();
-                //File.WriteAllText($"/Logs/{DateTime.Now}_{rd.Next(5000)}.txt", $"{e.Message}\n{e.Source}");
-            }
+            File.WriteAllText($"/Logs/{DateTime.Now}.txt", $"{e.Message}\n{e.Source}");
         }
     }
 }

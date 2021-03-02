@@ -55,7 +55,6 @@ namespace SpotifyLyrics
             Intro.Visibility = Visibility.Hidden;
             Error.Visibility = Visibility.Hidden;
             LyricsText.Visibility = Visibility.Hidden;
-            Avatar.Visibility = Visibility.Hidden;
             SongName.Visibility = Visibility.Hidden;
 
             if (song == "Spotify Premium" || song == "Spotify")
@@ -63,10 +62,9 @@ namespace SpotifyLyrics
                 Error.Visibility = Visibility.Visible;
                 return;
             }
+            MainWin.Title = song;
 
             SongName.Visibility = Visibility.Visible;
-            Avatar.Visibility = Visibility.Visible;
-
             SongName.Content = song;
             string lyrics = "";
 
@@ -79,17 +77,11 @@ namespace SpotifyLyrics
                 {
                     SongInfo songInfo = Lyrics.SearchSong(song, settings.GeniusToken);
                     lyrics = Lyrics.GetLyrics(songInfo);
-                    Lyrics.DownloadSongAvatar(songInfo);
-                    string FileName = new Random().Next(100000).ToString();
-                    File.Copy("SongAvatar.png", $"{System.IO.Path.GetTempPath()}{FileName}.png");
-                    BitmapImage bitmap = new BitmapImage(new Uri($"{System.IO.Path.GetTempPath()}{FileName}.png", UriKind.RelativeOrAbsolute));
-                    Avatar.Source = bitmap;
 
                     ListOfSongs listOfSongs = new ListOfSongs();
                     Song song1 = new Song();
                     song1.SongName = song;
                     song1.LyricsText = lyrics;
-                    song1.AvatarUrl = songInfo.response.hits[0].result.song_art_image_url;
 
                     listOfSongs.Songs = new List<Song>();
                     listOfSongs.Songs.Add(song1);
@@ -112,16 +104,10 @@ namespace SpotifyLyrics
                     {
                         SongInfo songInfo = Lyrics.SearchSong(song, settings.GeniusToken);
                         lyrics = Lyrics.GetLyrics(songInfo);
-                        Lyrics.DownloadSongAvatar(songInfo);
-                        string FileName = new Random().Next(100000).ToString();
-                        File.Copy("SongAvatar.png", $"{System.IO.Path.GetTempPath()}{FileName}.png");
-                        BitmapImage bitmap = new BitmapImage(new Uri($"{System.IO.Path.GetTempPath()}{FileName}.png", UriKind.RelativeOrAbsolute));
-                        //Avatar.Source = bitmap;
 
                         Song song1 = new Song();
                         song1.SongName = song;
                         song1.LyricsText = lyrics;
-                        song1.AvatarUrl = songInfo.response.hits[0].result.song_art_image_url;
                         list.Songs.Add(song1);
                         File.WriteAllText("Songs.json", JsonConvert.SerializeObject(list));
                     }
@@ -131,11 +117,6 @@ namespace SpotifyLyrics
             {
                 SongInfo songInfo = Lyrics.SearchSong(song, settings.GeniusToken);
                 lyrics = Lyrics.GetLyrics(songInfo);
-                Lyrics.DownloadSongAvatar(songInfo);
-                string FileName = new Random().Next(100000).ToString();
-                File.Copy("SongAvatar.png", $"{System.IO.Path.GetTempPath()}{FileName}.png");
-                BitmapImage bitmap = new BitmapImage(new Uri($"{System.IO.Path.GetTempPath()}{FileName}.png", UriKind.RelativeOrAbsolute));
-                Avatar.Source = bitmap;
             }
             LyricsText.Text = lyrics;
             if (LyricsText.Text.Length > 10) 
@@ -161,37 +142,31 @@ namespace SpotifyLyrics
             {
                 LyricsText.FontSize = 16;
                 SongName.FontSize = 12;
-                InfoBlock.Height = new GridLength(50);
             }
             if (MainWin.Width > 700 && MainWin.Width <= 800)
             {
                 LyricsText.FontSize = 18;
                 SongName.FontSize = 14;
-                InfoBlock.Height = new GridLength(60);
             }
             if (MainWin.Width > 800 && MainWin.Width <= 900)
             {
                 LyricsText.FontSize = 20;
                 SongName.FontSize = 16;
-                InfoBlock.Height = new GridLength(70);
             }
             if (MainWin.Width > 900 && MainWin.Width <= 1000)
             {
                 LyricsText.FontSize = 22;
                 SongName.FontSize = 18;
-                InfoBlock.Height = new GridLength(80);
             }
             if (MainWin.Width > 1000 && MainWin.Width <= 1100)
             {
                 LyricsText.FontSize = 24;
                 SongName.FontSize = 20;
-                InfoBlock.Height = new GridLength(90);
             }
             if (MainWin.Width > 1100 && MainWin.Width <= 1200)
             {
                 LyricsText.FontSize = 26;
                 SongName.FontSize = 22;
-                InfoBlock.Height = new GridLength(100);
             }
         }
     }

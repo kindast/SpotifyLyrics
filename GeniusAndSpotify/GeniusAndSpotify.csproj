@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="SongInfo.cs" />
     <Compile Include="CurrentlyPlaying.cs" />
+    <Compile Include="SongLyrics.cs" />
     <Compile Include="Spotify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
