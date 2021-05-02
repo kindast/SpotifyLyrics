@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using GeniusAndSpotify;
+using System.IO;
 using Newtonsoft.Json;
+using GeniusLibrary;
 
 namespace SpotifyLyrics
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -44,24 +40,26 @@ namespace SpotifyLyrics
                 this.DragMove();
             }
         }
+       
+        private void OpenSettings(object sender, RoutedEventArgs e)
+        {
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.Show();
+        }
 
-        private void Refresh(object sender, MouseButtonEventArgs e)
+        private void Refresh(object sender, RoutedEventArgs e)
         {
             Settings settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText("Settings.json"));
             if (settings.GeniusToken == "")
                 settings.GeniusToken = "aiKi_0g7GTxx8ik1dzl9F679S5T1lib5tuz6t_OttjvYRFeLDiPANPM5QXWcx_Uo";
 
             string song = Lyrics.CurrentlyPlaying();
-            Intro.Visibility = Visibility.Hidden;
-            Error.Visibility = Visibility.Hidden;
             LyricsText.Visibility = Visibility.Hidden;
             SongName.Visibility = Visibility.Hidden;
 
             if (song == "Spotify Premium" || song == "Spotify")
-            {
-                Error.Visibility = Visibility.Visible;
                 return;
-            }
+
             MainWin.Title = song;
 
             SongName.Visibility = Visibility.Visible;
@@ -119,55 +117,12 @@ namespace SpotifyLyrics
                 lyrics = Lyrics.GetLyrics(songInfo);
             }
             LyricsText.Text = lyrics;
-            if (LyricsText.Text.Length > 10) 
-            { 
-                LyricsText.Visibility = Visibility.Visible; 
+            if (LyricsText.Text.Length > 10)
+            {
+                LyricsText.Visibility = Visibility.Visible;
             }
             else
-            {
-                Error.Visibility = Visibility.Visible;
                 return;
-            }
-        }
-
-        private void OpenSettings(object sender, MouseButtonEventArgs e)
-        {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.Show();
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (MainWin.Width <= 700)
-            {
-                LyricsText.FontSize = 16;
-                SongName.FontSize = 12;
-            }
-            if (MainWin.Width > 700 && MainWin.Width <= 800)
-            {
-                LyricsText.FontSize = 18;
-                SongName.FontSize = 14;
-            }
-            if (MainWin.Width > 800 && MainWin.Width <= 900)
-            {
-                LyricsText.FontSize = 20;
-                SongName.FontSize = 16;
-            }
-            if (MainWin.Width > 900 && MainWin.Width <= 1000)
-            {
-                LyricsText.FontSize = 22;
-                SongName.FontSize = 18;
-            }
-            if (MainWin.Width > 1000 && MainWin.Width <= 1100)
-            {
-                LyricsText.FontSize = 24;
-                SongName.FontSize = 20;
-            }
-            if (MainWin.Width > 1100 && MainWin.Width <= 1200)
-            {
-                LyricsText.FontSize = 26;
-                SongName.FontSize = 22;
-            }
         }
     }
 }

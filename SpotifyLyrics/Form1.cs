@@ -27,9 +27,7 @@ namespace SpotifyLyrics
             {
                 string json = JsonConvert.SerializeObject(settings);
                 File.WriteAllText("Settings.json", json);
-
                 this.Close();
-                MessageBox.Show("Successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch
             {

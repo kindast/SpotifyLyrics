@@ -1,13 +1,11 @@
 ﻿using System;
-using xNet;
 using Newtonsoft.Json;
+using Leaf.xNet;
 using CsQuery;
-using System.Windows;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 
-namespace GeniusAndSpotify
+namespace GeniusLibrary
 {
     public class Lyrics
     {
@@ -64,34 +62,36 @@ namespace GeniusAndSpotify
                 return songURL;
             }
         }
-        public static void DownloadLyrics(SongInfo SongInfo)
-        {
-            string Url = SongInfo.response.hits[0].result.url;
-            using (var request = new HttpRequest())
-            {
-                try
-                {
-                    string html = request.Get(Url).ToString();
-                    File.WriteAllText($"{Path.GetTempPath()}/temp.html", html);
-                }
-                catch (xNet.HttpException e)
-                {
-                    WriteLog(e);
-                }
-            }
-        }
+        //public static void DownloadLyrics(SongInfo SongInfo)
+        //{
+        //    string Url = SongInfo.response.hits[0].result.url;
+        //    using (var request = new HttpRequest())
+        //    {
+        //        try
+        //        {
+        //            string html = request.Get(Url).ToString();
+        //            File.WriteAllText($"{Path.GetTempPath()}/temp.html", html);
+        //        }
+        //        catch (HttpException e)
+        //        {
+        //            WriteLog(e);
+        //        }
+        //    }
+        //}
 
         public static string GetLyrics(SongInfo SongInfo)
         {
-            DownloadLyrics(SongInfo);
-            CQ cq = CQ.CreateFromFile($"{Path.GetTempPath()}temp.html");
+            //DownloadLyrics(SongInfo);
+            //CQ cq = CQ.CreateFromFile($"{Path.GetTempPath()}temp.html");
+            CQ cq = CQ.CreateFromUrl($"{SongInfo.response.hits[0].result.url}");
             var lyrics = cq.Find("div.lyrics p").Text();
             if (lyrics == "")
             {
                 while (lyrics == "")
                 {
-                    DownloadLyrics(SongInfo);
-                    cq = CQ.CreateFromFile($"{Path.GetTempPath()}temp.html");
+                    //DownloadLyrics(SongInfo);
+                    //cq = CQ.CreateFromFile($"{Path.GetTempPath()}temp.html");
+                    cq = CQ.CreateFromUrl($"{SongInfo.response.hits[0].result.url}");
                     lyrics = cq.Find("div.lyrics p").Text();
                 }
             }
@@ -104,4 +104,3 @@ namespace GeniusAndSpotify
         }
     }
 }
-

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{236D809C-55B9-47DE-A3C7-CF35FDDDCC21}</ProjectGuid>
+    <ProjectGuid>{8E823DFB-A997-471E-9CE4-F103D36BFB8A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>SpotifyLyrics</RootNamespace>
     <AssemblyName>SpotifyLyrics</AssemblyName>
@@ -14,9 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\kindast\Desktop\SL\</PublishUrl>
+    <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -26,10 +24,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -44,7 +42,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -54,25 +52,9 @@
   <PropertyGroup>
     <ApplicationIcon>SL.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <NoWin32Manifest>true</NoWin32Manifest>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>1D06BFC95C0D09C41492ADB8AF7F107E9893D7FD</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>SpotifyLyrics_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Projects\WeatherApp\Libraries\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -138,20 +120,32 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="SpotifyLyrics_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GeniusAndSpotify\GeniusAndSpotify.csproj">
-      <Project>{8387c9df-621b-45cb-a416-8e1ca6562346}</Project>
-      <Name>GeniusAndSpotify</Name>
+    <ProjectReference Include="..\GeniusLibrary\GeniusLibrary.csproj">
+      <Project>{72061329-bf3c-4b07-8d16-f335af26959f}</Project>
+      <Name>GeniusLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\Close1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\Close2.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\Settings.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Source\SL.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="SL.ico" />
@@ -159,7 +153,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -167,33 +161,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Close1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Close2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Error.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Intro.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="no_image.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Refresh1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Refresh2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Settings1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Settings2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

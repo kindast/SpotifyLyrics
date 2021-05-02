@@ -1,13 +1,13 @@
-﻿<Window x:Name="MainWin" x:Class="SpotifyLyrics.MainWindow" SizeChanged="Window_SizeChanged"
+﻿<Window x:Name="MainWin" x:Class="SpotifyLyrics.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpotifyLyrics"
         mc:Ignorable="d"
-        Title="SpotifyLyrics" Height="500" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None"
-        ResizeMode="CanResizeWithGrip" AllowsTransparency="True"
-        MinHeight="400" MinWidth="600" FontFamily="Corbel">
+        Title="SpotifyLyrics" Height="400" Width="300"
+        WindowStyle="None" ResizeMode="CanResizeWithGrip"
+        MinHeight="400" MinWidth="300" AllowsTransparency="True">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -15,12 +15,11 @@
                 <GradientStop Color="#181818" Offset="0.3"/>
             </LinearGradientBrush>
         </Grid.Background>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="55"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="70"/>
             <RowDefinition/>
-            <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="ToolBar" Grid.Row="0" MouseDown="MoveWindow" Background="Transparent">
@@ -28,80 +27,63 @@
                    Cursor="Hand" MouseDown="CloseWindow" Margin="1,1,1,1">
                 <Image.Style>
                     <Style TargetType="Image">
-                        <Setter Property="Source" Value="Close1.png"/>
+                        <Setter Property="Source" Value="/Source/Close1.bmp"/>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Source" Value="Close2.png"/>
+                                <Setter Property="Source" Value="/Source/Close2.bmp"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
                 </Image.Style>
             </Image>
         </Grid>
+
         <Grid x:Name="Buttons" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Image x:Name="RefreshBtn" Grid.Column="0" Cursor="Hand"
-                       MouseDown="Refresh">
-                    <Image.Style>
-                        <Style TargetType="Image">
-                            <Setter Property="Source" Value="Refresh1.png"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Source" Value="Refresh2.png"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Image.Style>
-                </Image>
-                <Image x:Name="SettingsBtn" Grid.Column="1" Cursor="Hand"
-                       MouseDown="OpenSettings">
-                    <Image.Style>
-                        <Style TargetType="Image">
-                            <Setter Property="Source" Value="Settings1.png"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Source" Value="Settings2.png"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Image.Style>
-                </Image>
-            </Grid>
-            
+
+            <Button x:Name="RefreshBtn" 
+                        Grid.Column="0"
+                        Content="REFRESH"
+                        FontFamily="Franklin Gothic Medium" FontSize="25"
+                        Foreground="White"
+                        Background="#0db531"
+                        Click="Refresh"
+                        Margin="7"/>
+
+            <Button x:Name="SettingsBtn" 
+                        Grid.Column="1"
+                        Content="SETTINGS"
+                        FontFamily="Franklin Gothic Medium" FontSize="25"
+                        Foreground="White"
+                        Background="#0db531"
+                        Margin="7" Click="OpenSettings"/>
         </Grid>
-        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Grid Background="Transparent" Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label x:Name="SongName"
+                
+                <Label x:Name="SongName"
+                       Foreground="White" 
+                       VerticalAlignment="Center"
+                       Grid.Row="0" HorizontalAlignment="Center" Margin="3,0"
+                       FontSize="14px"/>
+
+                <TextBlock x:Name="LyricsText" 
+                           Visibility="Hidden" 
+                           Grid.Row="1" 
                            Foreground="White" 
-                           Grid.Column="2"
-                           VerticalAlignment="Center"/>
-                    
-                </Grid>
-                <TextBlock x:Name="LyricsText" Visibility="Hidden" Grid.Row="1" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="16px"/>
-                <Image x:Name="Intro" Grid.Row="1" Source="Images\Intro.png"/>
-                <Image x:Name="Error" Visibility="Hidden" Grid.Row="1" Source="Images\Error.png"/>
+                           HorizontalAlignment="Center" 
+                           Margin="3,8,3,3" 
+                           FontSize="16px"/>
             </Grid>
         </ScrollViewer>
+
     </Grid>
 </Window>

@@ -11,6 +11,5 @@ namespace SpotifyLyrics
     {
         public string SongName { get; set; }
         public string LyricsText { get; set; }
-        public string AvatarUrl { get; set; }
     }
 }
